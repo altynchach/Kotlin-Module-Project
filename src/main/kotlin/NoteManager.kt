@@ -20,15 +20,12 @@ class NoteManager(private val menuManager: MenuManager) {
                 var noteName: String
                 var content: String
 
-                // Повторять, пока название заметки не будет корректным
                 do {
                     noteName = menuManager.getUserInput("Введите название заметки:")
                     if (noteName.isBlank()) {
                         println("Название заметки не может быть пустым.")
                     }
                 } while (noteName.isBlank())
-
-                // Повторять, пока содержимое заметки не будет корректным
                 do {
                     content = menuManager.getUserInput("Введите содержимое заметки:")
                     if (content.isBlank()) {
