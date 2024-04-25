@@ -2,11 +2,18 @@ class ArchiveManager(private val menuManager: MenuManager, private val noteManag
     val archives = mutableListOf<Archive>()
 
     fun createArchive() {
-        val archiveName = menuManager.getUserInput("Введите имя архива:")
+        var archiveName: String
+        do {
+            archiveName = menuManager.getUserInput("Введите имя архива:")
+            if (archiveName.isBlank()) {
+                println("Имя архива не может быть пустым. Пожалуйста, введите корректное имя.")
+            }
+        } while (archiveName.isBlank()) // Повторять, пока имя архива не будет корректным
         val archive = Archive(archiveName)
         archives.add(archive)
         println("Архив $archiveName создан.")
     }
+
 
     fun selectArchive() {
         if (archives.isEmpty()) {

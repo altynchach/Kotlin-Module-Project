@@ -15,11 +15,36 @@ class NoteManager(private val menuManager: MenuManager) {
     }
 
     fun addNoteToArchive(archive: Archive) {
-        val noteName = menuManager.getUserInput("Введите название заметки:")
-        val content = menuManager.getUserInput("Введите содержимое заметки:")
-        val note = Note(noteName, content)
-        archive.notes.add(note)
-        println("Заметка '$noteName' добавлена в архив '${archive.archiveName}'.")
+        while (true) {
+            try {
+                var noteName: String
+                var content: String
+
+                // Повторять, пока название заметки не будет корректным
+                do {
+                    noteName = menuManager.getUserInput("Введите название заметки:")
+                    if (noteName.isBlank()) {
+                        println("Название заметки не может быть пустым.")
+                    }
+                } while (noteName.isBlank())
+
+                // Повторять, пока содержимое заметки не будет корректным
+                do {
+                    content = menuManager.getUserInput("Введите содержимое заметки:")
+                    if (content.isBlank()) {
+                        println("Содержание заметки не может быть пустым.")
+                    }
+                } while (content.isBlank())
+
+                val note = Note(noteName, content)
+                archive.notes.add(note)
+                println("Заметка '$noteName' добавлена в архив '${archive.archiveName}'.")
+                break
+            } catch (e: IllegalArgumentException) {
+                println(e.message)
+                println("Пожалуйста, попробуйте снова.")
+            }
+        }
     }
 
     fun viewNote(note: Note) {
